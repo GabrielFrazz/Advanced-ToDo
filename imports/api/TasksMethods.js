@@ -30,26 +30,44 @@ Meteor.methods({
 
   //mudar o status da tarefa
   async 'tasks.updateStatus'({ _id, newStatus }) {
-    //status permitidos
-    const allowedStatuses = ['todo', 'in_progress', 'completed'];
 
+    const task = await TasksCollection.findOneAsync({ _id });
+
+    //status permitidos
+    const allowedStatuses = ['to-do', 'in_progress', 'completed'];
+
+    //testando se a tarefa pertence ao usuário
+    if (task.userId != this.userId) {
+      throw new Meteor.Error('not-authorized, the task do not belong to you fool', ' usr: '+this.userId+' task: '+task);
+    }
+
+    //verificando se é um estado valido
     if (!allowedStatuses.includes(newStatus)) {
       throw new Meteor.Error('invalid-status', 'O status informado não é válido.');
     }
+
+    //verificando se o usuário iniciou a tarefa antes de finalizar
+    if(task.status === 'to-do' && newStatus === 'completed'){
+      throw new Meteor.Error('take it easy', 'a tarefa deve primeiro estar em andamento antes de ser finalizada'); 
+    }
+
     //alterando o status
     return await TasksCollection.updateAsync(_id, {
       $set: { status: newStatus },
     });
+
   },
 
-  "tasks.delete"({_id}){
+  async "tasks.delete"({_id}){
 
     //testando se o usuário está logado
     if (!this.userId) {
       throw new Meteor.Error('not-authorized', 'Você precisa estar logado para deletar uma tarefa.');
     }
+    
     //testando se o usuário é o dono da tarefa
-    const task = TasksCollection.findOne(_id);
+    const task = await TasksCollection.findOneAsync({ _id });
+
     if (task.userId !== this.userId) {
       throw new Meteor.Error('not-authorized', 'Você não tem permissão para deletar esta tarefa.');
     }
