@@ -11,15 +11,10 @@ Meteor.methods({
       email: String,
       dataNascimento: String, 
       sexo: String,
-      empresa: String,
-      foto: String,      
+      empresa: String,   
       password: String,
     });
 
-
-    if (!userData.foto.startsWith('data:image/')) {
-      throw new Meteor.Error('invalid-image', 'A foto fornecida não é uma string base64 válida de uma imagem.');
-    }
 
     const dataNascimentoDate = new Date(userData.dataNascimento);
     if (isNaN(dataNascimentoDate.getTime())) {
@@ -34,7 +29,7 @@ Meteor.methods({
         dataNascimento: dataNascimentoDate,
         sexo: userData.sexo,
         empresa: userData.empresa,
-        foto: userData.foto
+        foto: null
       }
     });
 

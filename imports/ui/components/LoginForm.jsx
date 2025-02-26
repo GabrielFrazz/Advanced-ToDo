@@ -1,7 +1,10 @@
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
-import { TextField, Button, Link } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Link as MuiLink } from "@mui/material";
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import EmailIcon from '@mui/icons-material/Email';
+import KeyIcon from '@mui/icons-material/Key';
+import InputAdornment from '@mui/material/InputAdornment';
 
 
 export default LoginForm = () => {
@@ -34,6 +37,15 @@ export default LoginForm = () => {
             fullWidth
             margin="normal"
             placeholder="Digite seu email"
+            slotProps={{
+              input: {
+                  startAdornment: (
+                      <InputAdornment position="start">
+                          <EmailIcon />
+                      </InputAdornment>
+                  ),
+              },
+            }}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -44,6 +56,15 @@ export default LoginForm = () => {
             fullWidth
             margin="normal"
             placeholder="Digite sua senha"
+            slotProps={{
+              input: {
+                  startAdornment: (
+                      <InputAdornment position="start">
+                          <KeyIcon />
+                      </InputAdornment>
+                  ),
+              },
+            }}
             type="password"
             value={password}
             onChange={(e) => {
@@ -55,9 +76,9 @@ export default LoginForm = () => {
           />
 
           <div className="extra-links">
-            <Link href="#" underline="hover">
+            <MuiLink component={RouterLink} to="/register" underline="hover">
               Crie uma conta
-            </Link>
+            </MuiLink>
           </div>
 
           <Button 
