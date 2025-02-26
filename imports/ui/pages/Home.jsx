@@ -5,6 +5,8 @@ import { Button} from "@mui/material";
 
 const Home = () => {
 
+  const logout = () => Meteor.logout();
+
   return (
     <div className="wallpaper-page">
 
@@ -33,6 +35,17 @@ const Home = () => {
                 Log in
               </Button>
             </Link>
+          </div>
+
+          <div className='home-logout-button'>
+              <Button 
+                variant="contained" 
+                fullWidth
+                className="logout-button"
+                onClick={logout}
+              >
+                logout
+              </Button>
           </div>
 
       </div>

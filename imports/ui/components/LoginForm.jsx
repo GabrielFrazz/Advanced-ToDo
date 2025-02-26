@@ -1,15 +1,26 @@
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { TextField, Button, Link } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+
 
 export default LoginForm = () => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    Meteor.loginWithPassword(username, password);
+    Meteor.loginWithPassword(username, password, (err)=>{
+      if(err){
+        setError(err.reason);
+      }else{
+        navigate("/");
+      }
+    });
   };
 
   return (
@@ -35,7 +46,12 @@ export default LoginForm = () => {
             placeholder="Digite sua senha"
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (error) setError("");
+            }}
+            error = {Boolean(error)}
+            helperText = {error}
           />
 
           <div className="extra-links">
