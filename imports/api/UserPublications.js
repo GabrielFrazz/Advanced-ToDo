@@ -9,8 +9,8 @@ Meteor.publish('currentUserData', function () {
     { _id: this.userId },
     {
       fields: {
-        profile: 1,   
-        emails: 1     
+        profile: 1,
+        emails: 1,
       },
     }
   );
