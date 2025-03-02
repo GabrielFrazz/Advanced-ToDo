@@ -6,7 +6,7 @@ const TopBar = () => {
     <AppBar
       position="fixed"
       sx={{
-        zIndex: 1200, // Higher than sidebar
+        zIndex: 1200,
         width: '100%',
         height: '77px',
         bgcolor: '#4A5C7E',

@@ -21,6 +21,7 @@ export default LoginForm = () => {
   const [password2, setPassword2] = useState('');
 
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [success, setSuccess] = useState(false);
 
@@ -43,6 +44,7 @@ export default LoginForm = () => {
     }
 
     setPasswordError('');
+    setEmailError('');
 
     Meteor.call(
       'users.signupFull',
@@ -57,7 +59,11 @@ export default LoginForm = () => {
       (error, userId) => {
         if (error) {
           console.error('Erro no signup:', error.reason);
-          setError(error.reason);
+          if (error.error === 'email-already-exists') {
+            setEmailError(error.reason);
+          } else {
+            setError(error.reason);
+          }
         } else {
           console.log('Usuário cadastrado com sucesso. ID:', userId);
           setSuccess(true);
@@ -120,7 +126,12 @@ export default LoginForm = () => {
                 },
               }}
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (emailError) setEmailError('');
+              }}
+              error={Boolean(emailError)}
+              helperText={emailError}
             />
 
             <Box className="register-sex-birthday">

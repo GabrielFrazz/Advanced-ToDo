@@ -3,7 +3,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { check } from 'meteor/check';
 
 Meteor.methods({
-  'users.signupFull'(userData) {
+  async 'users.signupFull'(userData) {
     check(userData, {
       nome: String,
       email: String,
@@ -16,6 +16,11 @@ Meteor.methods({
     const dataNascimentoDate = new Date(userData.dataNascimento);
     if (isNaN(dataNascimentoDate.getTime())) {
       throw new Meteor.Error('invalid-date', 'Data de Nascimento inválida.');
+    }
+
+    const existingUser = Meteor.users.findOneAsync({ 'emails.address': userData.email });
+    if (await existingUser) {
+      throw new Meteor.Error('email-already-exists', 'Este email já está cadastrado.');
     }
 
     const userId = Accounts.createUser({
