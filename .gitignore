@@ -1,18 +1,11 @@
 node_modules/
 npm-debug.log
-yarn.lock
-pnpm-lock.yaml
-
-.meteor/local
-.meteor/packages
-.meteor/dev_bundle
-.meteor/cordova-build
-.meteor/meteorite
 
 build/
 bundle/
 deploy/
 programs/
+
 
 .DS_Store
 Thumbs.db
@@ -22,6 +15,21 @@ Thumbs.db
 .idea/
 *.log
 
+
 settings.json
 .env
 *.pem
+
+
+*.bak
+*.tmp
+coverage/
+dist/
+node_modules/.cache/
+*.min.*
+*.map
+*.db
+
+
+!settings.json.example
+!.env.example
