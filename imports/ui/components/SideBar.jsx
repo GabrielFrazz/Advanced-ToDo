@@ -106,7 +106,7 @@ const Sidebar = () => {
           sx={{
             width: 40,
             height: 40,
-            mb: 1,
+            mb: 0,
             border: '2px solid white',
             marginTop: 'auto',
           }}

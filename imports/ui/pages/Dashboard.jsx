@@ -30,7 +30,6 @@ const Dashboard = () => {
               display: 'flex',
               flexDirection: 'column',
               flexGrow: 1,
-              p: 3,
               ml: '240px',
               m: 3,
               width: { sm: `calc(100% - 240px - 48px)` },
@@ -46,9 +45,10 @@ const Dashboard = () => {
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                backgroundColor: 'rgba(255, 255, 255, 0)',
+                backgroundColor: 'rgba(0, 0, 0, 0)',
                 height: '7vh',
                 width: '100%',
+                marginBottom: 0,
                 borderRadius: 2,
               }}
             >
@@ -76,8 +76,8 @@ const Dashboard = () => {
                 flexDirection: 'row',
                 flexGrow: 1,
                 width: '100%',
-                backgroundColor: 'rgba(255, 255, 255, 0)',
-                borderRadius: 2,
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                borderRadius: 1,
                 overflow: 'auto',
                 height: 'calc(85vh - 64px - 48px)',
                 alignContent: 'center',
