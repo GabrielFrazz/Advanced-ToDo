@@ -5,7 +5,7 @@ build/
 bundle/
 deploy/
 programs/
-
+.meteor/local
 
 .DS_Store
 Thumbs.db

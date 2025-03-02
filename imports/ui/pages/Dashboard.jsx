@@ -25,7 +25,7 @@ const Dashboard = () => {
           <Sidebar />
 
           <Box
-            component="wraper"
+            className="wrapper"
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -42,7 +42,7 @@ const Dashboard = () => {
             }}
           >
             <Box
-              component="top"
+              className="title"
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -70,7 +70,7 @@ const Dashboard = () => {
             </Box>
 
             <Box
-              component="main"
+              className="main"
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
