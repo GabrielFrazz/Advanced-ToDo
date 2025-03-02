@@ -1,58 +1,35 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button} from "@mui/material";
+import { Button, Box, Typography } from '@mui/material';
 
 const Home = () => {
-
-  const logout = () => Meteor.logout();
-
   return (
-    <div className="wallpaper-page">
+    <Box className="wallpaper-page">
+      <Box className="home-wrapper">
+        <Box className="home-screen">
+          <Box className="home-title">
+            <Box className="logo-image"> </Box>
 
-      <div className="home-wrapper">
+            <Typography variant="h1" className="home-title-text">
+              Advanced <br /> To-Do
+            </Typography>
+          </Box>
 
-        <div className='home-screen'>
+          <Typography variant="h2" className="home-text">
+            Gerencie suas tarefas <br /> de forma prática
+          </Typography>
 
-          <div className='home-title'>
-            <div className = 'logo-image'> </div>
-
-            <h1 className='home-title-text'>Advanced <br /> To-Do</h1>
-
-          </div>  
-
-          <h2 className='home-text'> Gerencie suas tarefas <br /> de forma prática</h2>
-
-          <div className='home-login-button'>
-            
+          <Box className="home-login-button">
             <Link to="/login">
-                <Button 
-                type="submit" 
-                variant="contained" 
-                fullWidth
-                className="login-button"
-              >
+              <Button type="submit" variant="contained" fullWidth className="login-button">
                 Log in
               </Button>
             </Link>
-          </div>
-
-          <div className='home-logout-button'>
-              <Button 
-                variant="contained" 
-                fullWidth
-                className="logout-button"
-                onClick={logout}
-              >
-                logout
-              </Button>
-          </div>
-
-      </div>
-
-    </div>
-
-  </div>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
