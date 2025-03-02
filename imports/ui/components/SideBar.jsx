@@ -70,6 +70,8 @@ const Sidebar = () => {
 
   const userEmail = user.emails[0].address || 'user@example.com';
   const userName = user.profile.nome || 'User Name';
+  const userNamePartes = userName.split(' ');
+  const userFirstName = userNamePartes[0].charAt(0).toUpperCase() + userNamePartes[0].slice(1);
   const userAvatar = user?.profile?.avatar || '/default-avatar.png';
 
   return (
@@ -118,8 +120,8 @@ const Sidebar = () => {
             flexDirection: 'column',
           }}
         >
-          <Typography variant="h6" sx={{ mt: 1, fontWeight: 'bold', fontSize: '0.9rem' }}>
-            {userName}
+          <Typography variant="h6" sx={{ mt: 1, fontWeight: 'bold', fontSize: '1.1rem' }}>
+            {userFirstName}
           </Typography>
           <Typography variant="body2" sx={{ opacity: 0.8 }}>
             {userEmail}
