@@ -16,14 +16,17 @@ import {
 import {
   Person as PersonIcon,
   Assignment as TaskIcon,
+  Dashboard as DashboardIcon,
   Logout as LogoutIcon,
 } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 
 const drawerWidth = 240;
 
 const Sidebar = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
   const navigate = useNavigate();
 
   const { user, isLoading } = useTracker(() => {
@@ -68,11 +71,43 @@ const Sidebar = () => {
     );
   }
 
+  const getNavLinks = () => {
+    const links = {
+      dashboard: {
+        path: '/dashboard',
+        icon: <DashboardIcon sx={{ color: 'white' }} />,
+        text: 'Dashboard',
+      },
+      profile: {
+        path: '/profile',
+        icon: <PersonIcon sx={{ color: 'white' }} />,
+        text: 'Profile',
+      },
+      tasks: {
+        path: '/tasks',
+        icon: <TaskIcon sx={{ color: 'white' }} />,
+        text: 'Tasks',
+      },
+    };
+
+    if (currentPath === '/dashboard' || currentPath === '/') {
+      return [links.profile, links.tasks];
+    } else if (currentPath === '/tasks') {
+      return [links.profile, links.dashboard];
+    } else if (currentPath === '/profile') {
+      return [links.dashboard, links.tasks];
+    }
+
+    return [links.dashboard, links.profile, links.tasks];
+  };
+
   const userEmail = user.emails[0].address || 'user@example.com';
   const userName = user.profile.nome || 'User Name';
   const userNamePartes = userName.split(' ');
   const userFirstName = userNamePartes[0].charAt(0).toUpperCase() + userNamePartes[0].slice(1);
   const userAvatar = user?.profile?.avatar || '/default-avatar.png';
+
+  const navLinks = getNavLinks();
 
   return (
     <Drawer
@@ -132,35 +167,22 @@ const Sidebar = () => {
       <Divider sx={{ borderColor: 'rgba(255,255,255,0.2)' }} />
 
       <List sx={{ flexGrow: 1 }}>
-        <ListItem
-          button
-          onClick={() => navigate('/profile')}
-          sx={{
-            '&:hover': {
-              bgcolor: 'rgba(255,255,255,0.1)',
-            },
-          }}
-        >
-          <ListItemIcon>
-            <PersonIcon sx={{ color: 'white' }} />
-          </ListItemIcon>
-          <ListItemText primary="Profile" />
-        </ListItem>
-
-        <ListItem
-          button
-          onClick={() => navigate('/tasks')}
-          sx={{
-            '&:hover': {
-              bgcolor: 'rgba(255,255,255,0.1)',
-            },
-          }}
-        >
-          <ListItemIcon>
-            <TaskIcon sx={{ color: 'white' }} />
-          </ListItemIcon>
-          <ListItemText primary="Tasks" />
-        </ListItem>
+        {navLinks.map((link) => (
+          <ListItem
+            button
+            key={link.path}
+            onClick={() => navigate(link.path)}
+            sx={{
+              '&:hover': {
+                bgcolor: 'rgba(255,255,255,0.1)',
+              },
+              bgcolor: currentPath === link.path ? 'rgba(255,255,255,0.1)' : 'transparent',
+            }}
+          >
+            <ListItemIcon>{link.icon}</ListItemIcon>
+            <ListItemText primary={link.text} />
+          </ListItem>
+        ))}
       </List>
 
       <Box sx={{ p: 2, mt: 'auto', mb: '2vh' }}>

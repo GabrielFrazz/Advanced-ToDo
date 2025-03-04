@@ -16,7 +16,6 @@ const Dashboard = () => {
 
   const concluidas = useTracker(() => TasksCollection.find({ status: 'completed' }).count());
 
-  console.log(cadastradas);
   return (
     <Box className="wallpaper-page-principal">
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
