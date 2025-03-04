@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Tasks from './pages/Tasks';
+import TaskAdd from './pages/TaskAdd';
 
 const ProtectedRoute = ({ children }) => {
   const { user, isLoading } = useTracker(() => {
@@ -58,6 +60,22 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tasks"
+          element={
+            <ProtectedRoute>
+              <Tasks />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/add-task"
+          element={
+            <ProtectedRoute>
+              <TaskAdd />
             </ProtectedRoute>
           }
         />
