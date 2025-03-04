@@ -62,6 +62,10 @@ const Tasks = () => {
     );
   };
 
+  const handleAddNewTask = () => {
+    navigate('/add-task');
+  };
+
   return (
     <Box className="wallpaper-page-principal">
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -112,6 +116,20 @@ const Tasks = () => {
               >
                 Tarefas
               </Typography>
+
+              <Button
+                onClick={handleAddNewTask}
+                type="submit"
+                variant="contained"
+                className="task-button"
+                sx={{
+                  height: '5vh',
+                  width: '23vh',
+                  borderRadius: 1,
+                }}
+              >
+                Adicionar nova
+              </Button>
             </Box>
 
             <Box
