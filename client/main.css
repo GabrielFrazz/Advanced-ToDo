@@ -209,3 +209,9 @@ p {
   font-weight: 400 !important;
   line-height: 1.2 !important;
 }
+
+.task-button {
+  background: linear-gradient(135deg, #83b4ff, #5a72a0) !important;
+  color: #fff !important;
+  font-weight: 400 !important;
+}
