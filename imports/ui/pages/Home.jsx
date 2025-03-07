@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Box, Typography } from '@mui/material';

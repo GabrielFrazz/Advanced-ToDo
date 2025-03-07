@@ -96,6 +96,8 @@ const Sidebar = () => {
       return [links.profile, links.dashboard];
     } else if (currentPath === '/profile') {
       return [links.dashboard, links.tasks];
+    } else if (currentPath === '/add-task') {
+      return [links.profile, links.dashboard];
     }
 
     return [links.dashboard, links.profile, links.tasks];
