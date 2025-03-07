@@ -2,20 +2,21 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import {
   Box,
-  Checkbox,
   Typography,
   MenuItem,
   Select,
   IconButton,
   FormControl,
   CircularProgress,
+  Icon,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import TaskOutlinedIcon from '@mui/icons-material/TaskOutlined';
 import { useTracker } from 'meteor/react-meteor-data';
 import { useNavigate } from 'react-router-dom';
 
-export const Task = ({ task, onCheckboxClick, onDeleteClick, onStatusChange }) => {
+export const Task = ({ task, onDeleteClick, onStatusChange }) => {
   const navigate = useNavigate();
 
   const handleEdit = () => {
@@ -74,11 +75,9 @@ export const Task = ({ task, onCheckboxClick, onDeleteClick, onStatusChange }) =
         },
       }}
     >
-      <Checkbox
-        checked={!!task.isChecked}
-        onChange={() => onCheckboxClick(task)}
-        sx={{ color: '#4A5C7E', '&.Mui-checked': { color: '#4A5C7E' } }}
-      />
+      <Icon sx={{ color: '#4A5C7E', mb: 1, mr: 2.5 }}>
+        <TaskOutlinedIcon fontSize="small" />
+      </Icon>
 
       <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
         <Typography
@@ -112,7 +111,7 @@ export const Task = ({ task, onCheckboxClick, onDeleteClick, onStatusChange }) =
         <Box sx={{ width: '15%' }}>
           <FormControl fullWidth size="small">
             <Select
-              value={task.status || 'to-do'}
+              value={task.status}
               onChange={(e) => onStatusChange(task, e.target.value)}
               sx={{
                 height: '30px',

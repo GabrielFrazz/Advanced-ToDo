@@ -24,21 +24,6 @@ const Tasks = () => {
     return { tasks, isTasksLoading: false };
   });
 
-  const toggleChecked = (task) => {
-    Meteor.call(
-      'tasks.update',
-      {
-        _id: task._id,
-        updates: { isChecked: !task.isChecked },
-      },
-      (error) => {
-        if (error) {
-          console.error('Error updating task:', error);
-        }
-      }
-    );
-  };
-
   const deleteTask = (task) => {
     Meteor.call('tasks.delete', { _id: task._id }, (error) => {
       if (error) {
@@ -214,7 +199,6 @@ const Tasks = () => {
                   <Task
                     key={task._id}
                     task={task}
-                    onCheckboxClick={toggleChecked}
                     onDeleteClick={deleteTask}
                     onStatusChange={updateTaskStatus}
                   />
