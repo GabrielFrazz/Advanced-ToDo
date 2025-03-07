@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { TasksCollection } from './TasksCollection';
 
-Meteor.publish('tasks', function () {
+Meteor.publish('tasks', function (filter) {
   //retornando todas as tarefas
   return TasksCollection.find().fetch();
 });

@@ -1,15 +1,10 @@
-import { Meteor } from 'meteor/meteor';
-import { useTracker, useSubscribe } from 'meteor/react-meteor-data';
 import React from 'react';
-import { Box, Typography, CircularProgress, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import TopBar from '../components/TopBar';
 import Sidebar from '../components/SideBar';
-import { TasksCollection } from '../../api/TasksCollection';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import TaskForm from '../components/TaskForm';
 
 const TaskAdd = () => {
-  const navigate = useNavigate();
-
   return (
     <Box className="wallpaper-page-principal">
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -68,6 +63,7 @@ const TaskAdd = () => {
                 flexDirection: 'column',
                 flexGrow: 1,
                 width: '93%',
+                height: '71vh',
                 borderRadius: 3,
                 bgcolor: 'rgba(255, 255, 255, 0.7)',
                 ml: '4rem',
@@ -75,7 +71,9 @@ const TaskAdd = () => {
                 boxShadow: 5,
                 marginBottom: 2,
               }}
-            ></Box>
+            >
+              <TaskForm />
+            </Box>
           </Box>
         </Box>
       </Box>

@@ -211,7 +211,17 @@ p {
 }
 
 .task-button {
-  background: linear-gradient(135deg, #83b4ff, #5a72a0) !important;
+  background: linear-gradient(135deg, #a3c7ff, #7088b0) !important;
   color: #fff !important;
   font-weight: 400 !important;
+  letter-spacing: 0.3px !important;
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4rem;
+  margin-left: 4rem;
+  margin-right: 5rem;
+  min-width: 50% !important;
 }

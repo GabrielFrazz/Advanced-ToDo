@@ -57,14 +57,6 @@ Meteor.methods({
 
 Meteor.methods({
   async 'users.updateProfile'(profileData) {
-    check(profileData, {
-      nome: String,
-      email: String,
-      dataNascimento: String,
-      sexo: String,
-      empresa: String,
-      foto: String,
-    });
     console.log(this.userId);
     if (!this.userId) {
       throw new Meteor.Error(
@@ -73,13 +65,6 @@ Meteor.methods({
       );
     }
     console.log(this.userId);
-
-    if (!profileData.foto.startsWith('data:image/')) {
-      throw new Meteor.Error(
-        'invalid-image',
-        'A foto fornecida não é uma string base64 válida de uma imagem.'
-      );
-    }
 
     const dataNascimentoDate = new Date(profileData.dataNascimento);
     if (isNaN(dataNascimentoDate.getTime())) {

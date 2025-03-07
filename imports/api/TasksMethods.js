@@ -4,6 +4,19 @@ import { TasksCollection } from './TasksCollection';
 Meteor.methods({
   //insersão de uma nova tarefa
   'tasks.insert'(doc) {
+    //testando se o usuário está logado
+    if (!this.userId) {
+      throw new Meteor.Error(
+        'not-authorized',
+        'Você precisa estar logado para adicionar uma tarefa.'
+      );
+    }
+    //testando se a data é válida
+    const data = new Date(doc.data);
+    if (isNaN(data.getTime())) {
+      throw new Meteor.Error('invalid-date', 'A data informada não é válida.');
+    }
+
     return TasksCollection.insertAsync({
       ...doc,
       //id do usuário logado
