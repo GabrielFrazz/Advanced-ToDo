@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Tasks from './pages/Tasks';
 import TaskAdd from './pages/TaskAdd';
+import Profile from './pages/Profile';
 
 const ProtectedRoute = ({ children }) => {
   const { user, isLoading } = useTracker(() => {
@@ -76,6 +77,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
               <TaskAdd />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
