@@ -107,7 +107,7 @@ const Sidebar = () => {
   const userName = user.profile.nome || 'User Name';
   const userNamePartes = userName.split(' ');
   const userFirstName = userNamePartes[0].charAt(0).toUpperCase() + userNamePartes[0].slice(1);
-  const userAvatar = user?.profile?.avatar || '/default-avatar.png';
+  const userAvatar = user.profile.foto || '';
 
   const navLinks = getNavLinks();
 
