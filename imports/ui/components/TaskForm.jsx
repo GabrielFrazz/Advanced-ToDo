@@ -254,8 +254,8 @@ export default TaskForm = () => {
               width: '20%',
               marginBottom: '10px',
               padding: '10px',
-              backgroundColor: '#2E3B55',
-              color: '#fff',
+              color: 'primary',
+              opacity: 0.7,
             }}
           >
             criar tarefa
