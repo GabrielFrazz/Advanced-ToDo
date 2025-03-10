@@ -16,6 +16,11 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import PersonIcon from '@mui/icons-material/Person';
+import InputAdornment from '@mui/material/InputAdornment';
+import EmailIcon from '@mui/icons-material/Email';
+import WcIcon from '@mui/icons-material/Wc';
+import BusinessIcon from '@mui/icons-material/Business';
 
 const ProfileForm = () => {
   const fileInputRef = useRef(null);
@@ -247,6 +252,15 @@ const ProfileForm = () => {
               disabled={!isEditing}
               required
               variant="outlined"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   '&.Mui-focused fieldset': {
@@ -268,6 +282,15 @@ const ProfileForm = () => {
               disabled={!isEditing}
               required
               variant="outlined"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   '&.Mui-focused fieldset': {
@@ -295,6 +318,15 @@ const ProfileForm = () => {
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 variant="outlined"
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <WcIcon />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     '&.Mui-focused fieldset': {
@@ -339,6 +371,15 @@ const ProfileForm = () => {
               onChange={handleInputChange}
               disabled={!isEditing}
               variant="outlined"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <BusinessIcon />
+                    </InputAdornment>
+                  ),
+                },
+              }}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   '&.Mui-focused fieldset': {
