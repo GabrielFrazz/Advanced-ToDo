@@ -9,6 +9,7 @@ import {
   FormControl,
   CircularProgress,
   Icon,
+  Tooltip,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -84,21 +85,23 @@ export const Task = ({ task, onDeleteClick, onStatusChange }) => {
       </Icon>
 
       <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-        <Typography
-          sx={{
-            fontFamily: 'Poppins',
-            fontWeight: 400,
-            fontSize: '14px',
-            width: '70%',
-            color: '#4A5C7E',
-            textDecoration: task.isChecked ? 'line-through' : 'none',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {task.name}
-        </Typography>
+        <Tooltip title={`descrição: ${task.descricao}`} placement="bottom-start">
+          <Typography
+            sx={{
+              fontFamily: 'Poppins',
+              fontWeight: 400,
+              fontSize: '14px',
+              width: '70%',
+              color: '#4A5C7E',
+              textDecoration: task.isChecked ? 'line-through' : 'none',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {task.name}
+          </Typography>
+        </Tooltip>
 
         <Typography
           sx={{
