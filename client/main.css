@@ -211,7 +211,6 @@ p {
 }
 
 .task-button {
-  background: linear-gradient(135deg, #a3c7ff, #7088b0) !important;
   color: #fff !important;
   font-weight: 400 !important;
   letter-spacing: 0.3px !important;

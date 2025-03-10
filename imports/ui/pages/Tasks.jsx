@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { useTracker, useSubscribe } from 'meteor/react-meteor-data';
 import React from 'react';
-import { Box, Typography, CircularProgress, Button } from '@mui/material';
+import { Box, Typography, CircularProgress, Button, Chip } from '@mui/material';
 import TopBar from '../components/TopBar';
 import Sidebar from '../components/SideBar';
 import { TasksCollection } from '../../api/TasksCollection';
@@ -10,7 +10,38 @@ import { useNavigate } from 'react-router-dom';
 
 const Tasks = () => {
   const navigate = useNavigate();
-  const isLoading = useSubscribe('tasks.user');
+
+  const [filter, setFilter] = React.useState({
+    $or: [{ userId: Meteor.userId() }],
+    status: { $in: ['to-do', 'in_progress', 'completed'] },
+  });
+
+  const [showPublicTasks, setShowPublicTasks] = React.useState(false);
+  const [hideCompletedTasks, setHideCompletedTasks] = React.useState(false);
+
+  React.useEffect(() => {
+    let newFilter = {};
+
+    if (showPublicTasks) {
+      newFilter = {
+        $or: [{ userId: Meteor.userId() }, { pessoal: false }],
+      };
+    } else {
+      newFilter = {
+        userId: Meteor.userId(),
+      };
+    }
+
+    if (hideCompletedTasks) {
+      newFilter.status = { $in: ['to-do', 'in_progress'] };
+    } else {
+      newFilter.status = { $in: ['to-do', 'in_progress', 'completed'] };
+    }
+
+    setFilter(newFilter);
+  }, [showPublicTasks, hideCompletedTasks]);
+
+  const isLoading = useSubscribe('tasks.filter', filter);
 
   const { tasks, isTasksLoading } = useTracker(() => {
     const noDataAvailable = { tasks: [] };
@@ -19,7 +50,7 @@ const Tasks = () => {
       return { ...noDataAvailable, isTasksLoading: true };
     }
 
-    const tasks = TasksCollection.find({}, { sort: { createdAt: -1 } }).fetch();
+    const tasks = TasksCollection.find({}, { sort: { data: -1 } }).fetch();
 
     return { tasks, isTasksLoading: false };
   });
@@ -49,6 +80,14 @@ const Tasks = () => {
 
   const handleAddNewTask = () => {
     navigate('/add-task');
+  };
+
+  const togglePublicTasks = () => {
+    setShowPublicTasks(!showPublicTasks);
+  };
+
+  const toggleCompletedTasks = () => {
+    setHideCompletedTasks(!hideCompletedTasks);
   };
 
   return (
@@ -111,10 +150,41 @@ const Tasks = () => {
                   height: '5vh',
                   width: '23vh',
                   borderRadius: 1,
+                  color: 'primary',
+                  opacity: 0.7,
                 }}
               >
                 Adicionar nova
               </Button>
+              <Box sx={{ ml: 3, display: 'flex', gap: 1, alignItems: 'center' }}>
+                <Chip
+                  label="Tarefas públicas"
+                  clickable
+                  onClick={togglePublicTasks}
+                  color={showPublicTasks ? 'primary' : 'default'}
+                  variant={showPublicTasks ? 'filled' : 'outlined'}
+                  sx={{
+                    fontFamily: 'Poppins',
+                    height: '32px',
+                    borderRadius: 1,
+                    '& .MuiChip-label': { px: 2 },
+                  }}
+                />
+
+                <Chip
+                  label="Ocultar completas"
+                  clickable
+                  onClick={toggleCompletedTasks}
+                  color={hideCompletedTasks ? 'primary' : 'default'}
+                  variant={hideCompletedTasks ? 'filled' : 'outlined'}
+                  sx={{
+                    fontFamily: 'Poppins',
+                    height: '32px',
+                    borderRadius: 1,
+                    '& .MuiChip-label': { px: 2 },
+                  }}
+                />
+              </Box>
             </Box>
 
             <Box
@@ -204,8 +274,35 @@ const Tasks = () => {
                   />
                 ))
               ) : (
-                <Box sx={{ p: 3, textAlign: 'center' }}>
-                  <Typography color="textSecondary">Você não tem tarefas!</Typography>
+                <Box
+                  sx={{
+                    p: 3,
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src="/images/wired-outline-262-emoji-wow-hover-pinch.gif"
+                    alt="Empty tasks"
+                    sx={{
+                      width: 300,
+                      height: 300,
+                      mt: 5,
+                      mb: 2,
+                      objectFit: 'cover',
+                      borderRadius: 1,
+                      color: 'text.secondary',
+                    }}
+                  />
+                  <Typography
+                    color="textSecondary"
+                    sx={{ mt: 1, fontFamily: 'Poppins', fontSize: '24px' }}
+                  >
+                    Você não tem tarefas!
+                  </Typography>
                 </Box>
               )}
             </Box>

@@ -116,7 +116,7 @@ export default TaskForm = () => {
           variant="standard"
           fullWidth
           margin="normal"
-          placeholder="Digite seu nome"
+          placeholder="Digite a tarefa"
           value={tarefa}
           onChange={(e) => {
             if (errorTarefa) setErrorTarefa('');
@@ -181,7 +181,7 @@ export default TaskForm = () => {
             />
           </Box>
 
-          <Box sx={{ width: '25%', mt: 3.9, ml: 2 }}>
+          <Box sx={{ width: '22%', mt: 3.9, ml: 2 }}>
             <FormControl
               fullWidth
               size="small"

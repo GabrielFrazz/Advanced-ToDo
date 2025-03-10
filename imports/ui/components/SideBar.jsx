@@ -81,12 +81,12 @@ const Sidebar = () => {
       profile: {
         path: '/profile',
         icon: <PersonIcon sx={{ color: 'white' }} />,
-        text: 'Profile',
+        text: 'Perfil',
       },
       tasks: {
         path: '/tasks',
         icon: <TaskIcon sx={{ color: 'white' }} />,
-        text: 'Tasks',
+        text: 'Tarefas',
       },
     };
 
@@ -100,7 +100,7 @@ const Sidebar = () => {
       return [links.profile, links.dashboard];
     }
 
-    return [links.dashboard, links.profile, links.tasks];
+    return [links.profile, links.dashboard];
   };
 
   const userEmail = user.emails[0].address || 'user@example.com';

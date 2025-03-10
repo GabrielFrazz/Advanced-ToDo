@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { TasksCollection } from './TasksCollection';
 
-Meteor.publish('tasks', function (filter) {
+Meteor.publish('tasks', function () {
   //retornando todas as tarefas
-  return TasksCollection.find().fetch();
+  return TasksCollection.find();
 });
 
 Meteor.publish('tasks.user', function () {
@@ -13,4 +13,8 @@ Meteor.publish('tasks.user', function () {
     return this.ready();
   }
   return TasksCollection.find({ userId });
+});
+
+Meteor.publish('tasks.filter', function (filter) {
+  return TasksCollection.find(filter);
 });
