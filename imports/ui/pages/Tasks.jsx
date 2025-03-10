@@ -1,12 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { useTracker, useSubscribe } from 'meteor/react-meteor-data';
 import React from 'react';
-import { Box, Typography, CircularProgress, Button, Chip } from '@mui/material';
+import { Box, Typography, CircularProgress, Button, Chip, TextField } from '@mui/material';
 import TopBar from '../components/TopBar';
 import Sidebar from '../components/SideBar';
 import { TasksCollection } from '../../api/TasksCollection';
 import { Task } from '../components/Task';
 import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
 
 const Tasks = () => {
   const navigate = useNavigate();
@@ -16,30 +18,46 @@ const Tasks = () => {
     status: { $in: ['to-do', 'in_progress', 'completed'] },
   });
 
+  const [search, setSearch] = React.useState('');
+
   const [showPublicTasks, setShowPublicTasks] = React.useState(false);
   const [hideCompletedTasks, setHideCompletedTasks] = React.useState(false);
+
+  const [disableChip, setDisableChip] = React.useState(false);
 
   React.useEffect(() => {
     let newFilter = {};
 
-    if (showPublicTasks) {
+    if (search) {
+      setDisableChip(true);
       newFilter = {
-        $or: [{ userId: Meteor.userId() }, { pessoal: false }],
+        $and: [
+          { $or: [{ userId: Meteor.userId() }, { pessoal: false }] },
+          { name: { $regex: search, $options: 'i' } },
+        ],
+        status: { $in: ['to-do', 'in_progress', 'completed'] },
       };
     } else {
-      newFilter = {
-        userId: Meteor.userId(),
-      };
-    }
+      setDisableChip(false);
+      if (showPublicTasks) {
+        newFilter = {
+          $or: [{ userId: Meteor.userId() }, { pessoal: false }],
+        };
+      } else {
+        newFilter = {
+          userId: Meteor.userId(),
+        };
+      }
 
-    if (hideCompletedTasks) {
-      newFilter.status = { $in: ['to-do', 'in_progress'] };
-    } else {
-      newFilter.status = { $in: ['to-do', 'in_progress', 'completed'] };
+      if (hideCompletedTasks) {
+        newFilter.status = { $in: ['to-do', 'in_progress'] };
+      } else {
+        newFilter.status = { $in: ['to-do', 'in_progress', 'completed'] };
+      }
     }
 
     setFilter(newFilter);
-  }, [showPublicTasks, hideCompletedTasks]);
+  }, [showPublicTasks, hideCompletedTasks, search]);
 
   const isLoading = useSubscribe('tasks.filter', filter);
 
@@ -90,6 +108,10 @@ const Tasks = () => {
     setHideCompletedTasks(!hideCompletedTasks);
   };
 
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+  };
+
   return (
     <Box className="wallpaper-page-principal">
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -119,7 +141,7 @@ const Tasks = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 height: '9vh',
-                width: '90%',
+                width: '94%',
                 ml: '3rem',
                 marginBottom: 0,
                 marginTop: 2,
@@ -160,6 +182,7 @@ const Tasks = () => {
                 <Chip
                   label="Tarefas públicas"
                   clickable
+                  disabled={disableChip}
                   onClick={togglePublicTasks}
                   color={showPublicTasks ? 'primary' : 'default'}
                   variant={showPublicTasks ? 'filled' : 'outlined'}
@@ -174,6 +197,7 @@ const Tasks = () => {
                 <Chip
                   label="Ocultar completas"
                   clickable
+                  disabled={disableChip}
                   onClick={toggleCompletedTasks}
                   color={hideCompletedTasks ? 'primary' : 'default'}
                   variant={hideCompletedTasks ? 'filled' : 'outlined'}
@@ -182,6 +206,41 @@ const Tasks = () => {
                     height: '32px',
                     borderRadius: 1,
                     '& .MuiChip-label': { px: 2 },
+                  }}
+                />
+              </Box>
+
+              <Box sx={{ width: '40%', ml: '4rem', alignItems: 'center' }}>
+                <TextField
+                  fullWidth
+                  placeholder="Pesquisar tarefas..."
+                  autoComplete="off"
+                  value={search}
+                  onChange={handleSearch}
+                  variant="outlined"
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    },
+                  }}
+                  sx={{
+                    fontFamily: 'Poppins',
+                    borderRadius: 5,
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 5,
+                      height: '35px',
+                      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                      '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                      },
+                      '& fieldset': {
+                        borderColor: 'rgba(0, 0, 0, 0.1)',
+                      },
+                    },
                   }}
                 />
               </Box>
