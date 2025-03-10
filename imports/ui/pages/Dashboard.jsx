@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { useTracker, useSubscribe } from 'meteor/react-meteor-data';
 import React from 'react';
 import { Box, Typography } from '@mui/material';

@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import Tasks from './pages/Tasks';
 import TaskAdd from './pages/TaskAdd';
 import Profile from './pages/Profile';
+import TaskEdit from './pages/TaskEdit';
 
 const ProtectedRoute = ({ children }) => {
   const { user, isLoading } = useTracker(() => {
@@ -73,10 +74,18 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="/add-task"
+          path="/add-task/"
           element={
             <ProtectedRoute>
               <TaskAdd />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-task/:id"
+          element={
+            <ProtectedRoute>
+              <TaskEdit />
             </ProtectedRoute>
           }
         />
