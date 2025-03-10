@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Meteor } from 'meteor/meteor';
 import {
   Box,
@@ -29,11 +29,15 @@ export const Task = ({ task, onDeleteClick, onStatusChange }) => {
     completed: 'Concluído',
   };
 
-  const { user, isLoading } = useTracker(() => {
-    const subscription = Meteor.subscribe('currentUserData');
+  const { taskUser, isLoading, block } = useTracker(() => {
+    const subscription = Meteor.subscribe('currentAndIdUser', task.userId);
+    const Taskuser = Meteor.users.findOne({ _id: task.userId });
+    const user = Meteor.user();
+    const block = !(task.userId === user._id);
     return {
-      user: Meteor.user(),
+      taskUser: Taskuser,
       isLoading: !subscription.ready(),
+      block: block,
     };
   }, []);
 
@@ -59,7 +63,7 @@ export const Task = ({ task, onDeleteClick, onStatusChange }) => {
     );
   }
 
-  const userName = user.profile.nome || 'User Name';
+  const userName = taskUser.profile.nome || 'User Name';
   const userNamePartes = userName.split(' ');
   const userFirstName = userNamePartes[0].charAt(0).toUpperCase() + userNamePartes[0].slice(1);
 
@@ -124,6 +128,7 @@ export const Task = ({ task, onDeleteClick, onStatusChange }) => {
                   borderColor: '#4A5C7E',
                 },
               }}
+              disabled={block}
               renderValue={(value) => statusDisplay[value] || value}
             >
               <MenuItem value="to-do">Pendente</MenuItem>
@@ -135,11 +140,16 @@ export const Task = ({ task, onDeleteClick, onStatusChange }) => {
       </Box>
 
       <Box sx={{ display: 'flex', gap: 1 }}>
-        <IconButton size="small" onClick={handleEdit} sx={{ color: '#4A5C7E' }}>
+        <IconButton size="small" onClick={handleEdit} sx={{ color: '#4A5C7E' }} disabled={block}>
           <EditIcon fontSize="small" />
         </IconButton>
 
-        <IconButton size="small" onClick={() => onDeleteClick(task)} sx={{ color: 'red' }}>
+        <IconButton
+          size="small"
+          onClick={() => onDeleteClick(task)}
+          sx={{ color: 'red' }}
+          disabled={block}
+        >
           <DeleteOutlineIcon fontSize="small" />
         </IconButton>
       </Box>
