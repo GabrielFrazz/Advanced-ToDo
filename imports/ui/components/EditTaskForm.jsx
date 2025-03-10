@@ -109,6 +109,10 @@ export default EditTaskForm = () => {
     setOpenSnackbar(false);
   };
 
+  if (isLoading) {
+    return <CircularProgress />;
+  }
+
   return (
     <Box component="form" className="task-form">
       <Box sx={{ flex: '1 0 auto' }}>
