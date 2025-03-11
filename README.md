@@ -27,6 +27,13 @@ O Advanced To-Do é uma aplicação de lista de tarefas desenvolvida para ajudar
 - Dashboard de estatísticas (tarefas concluidas, etc.)
 - Perfil de usuário com foto e dados pessoais
 
+### Demonstração Online
+
+A aplicação está hospedada no **Meteor Cloud** como um projeto de teste.  
+Acesse a versão online neste link:
+
+[**Advanced ToDo - Versão Online**](https://advanced-todo.meteorapp.com/)
+
 ## Protótipos das Telas
 
 > Home

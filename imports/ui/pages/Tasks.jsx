@@ -35,7 +35,7 @@ const Tasks = () => {
           { $or: [{ userId: Meteor.userId() }, { pessoal: false }] },
           { name: { $regex: search, $options: 'i' } },
         ],
-        status: { $in: ['to-do', 'in_progress', 'completed'] },
+        status: { $in: ['to-do', 'in_progress', 'completed'] }, 
       };
     } else {
       setDisableChip(false);
