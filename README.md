@@ -56,7 +56,7 @@ O Advanced To-Do é uma aplicação de lista de tarefas desenvolvida para ajudar
 
 Para uma visão mais detalhada e interativa dos protótipos, acesse o link abaixo:
 
-[Link do Projeto no Figma](https://www.figma.com/design/7xKr9dY03OMEMU3pP1i6HV/Advanced-ToDo?node-id=1-3&t=vf9FkplPjDj9qmlu-1)
+[Projeto no Figma](https://www.figma.com/design/7xKr9dY03OMEMU3pP1i6HV/Advanced-ToDo?node-id=1-3&t=vf9FkplPjDj9qmlu-1)
 
 ---
 
